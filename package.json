@@ -1,0 +1,32 @@
+{
+  "name": "inmotionreview",
+  "version": "1.0.0",
+  "description": "InMotion Code Challenge",
+  "engines": {
+    "node": "10.4.0",
+    "npm": "6.1.0"
+  },
+  "main": "index.js",
+  "scripts": {
+  	"test": "node server.js",
+    "start": "PORT=3000 HOST=local node scripts/start.js",
+    "local:dev": "STAGE=dev npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrs341/InMotionReview.git"
+  },
+  "author": "Jason Sinn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jrs341/InMotionReview/issues"
+  },
+  "homepage": "https://github.com/jrs341/InMotionReview#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "webpack": "^4.13.0"
+  }
+}
