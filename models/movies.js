@@ -1,8 +1,8 @@
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
-var Schema = mongoose.Schema
+const Schema = mongoose.Schema
 
-var MovieSchema = new Schema({
+const MovieSchema = new Schema({
 	Genre:{
 		type: String,
 		trim: true
@@ -23,3 +23,7 @@ var MovieSchema = new Schema({
 		type: Object,
 	}
 })
+
+const Movies = mongoose.model('Movies', MovieSchema)
+
+module.exports = Movies

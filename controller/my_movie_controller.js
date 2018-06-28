@@ -1,11 +1,14 @@
-var express = require('express')
-var router = express.Router()
-var movies = require('../models')
+const express = require('express')
+const router = express.Router()
+//const movies = require('../models/movies')
 
-//get route -> index
-router.get('/', (req,res) => {
-		res.redirect('/my_movies')
+router.get('/', (req, res) => {
+	res.sendFile('views/index.html', {root:__dirname + '/../'})
 })
+//get route -> index
+//router.get('/', (req,res) => {
+		//res.redirect('/my_movies')
+//})
 
 //router.get('/movies/search', (req,res) => {
 	//express callback response by calling burger.selectAllBurger
@@ -32,6 +35,6 @@ router.get('/', (req,res) => {
 		//console.log(result)
 		//res.redirect('/')
 	//})
-})
+//})
 
 module.exports = router
