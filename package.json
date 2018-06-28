@@ -8,9 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-  	"test": "node server.js",
-    "start": "PORT=3000 HOST=local node scripts/start.js",
-    "local:dev": "STAGE=dev npm run start"
+  	"test": "node server.js"
   },
   "repository": {
     "type": "git",
