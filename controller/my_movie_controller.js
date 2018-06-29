@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const http = require('http')
+const fs = require('fs')
 //const movies = require('../models/movies')
 const ids = [{title: 'Zoolander', id: 'tt0196229'},
 {title: 'Guardians of the Galaxy', id: 'tt3896198'},
@@ -14,44 +15,56 @@ sortByTitle = (a,b) => {
 	return 0
 }
 
-console.log(ids.sort(sortByTitle))
+const sortedIds = ids.sort(sortByTitle)
+let initialData = []
 
-http.get('http://www.omdbapi.com/?apikey=7b20f955&i=' + id, (res) => {
-  const { statusCode } = res;
-  const contentType = res.headers['content-type'];
+//for (var i = 0; i<sortedIds.length; i++ ){
+	//http.get('http://www.omdbapi.com/?apikey=7b20f955&i=' + sortedIds[i].id, (res) => {
+	http.get('http://www.omdbapi.com/?apikey=7b20f955&i=tt3896198', (res) => {
+	  const { statusCode } = res
+	  const contentType = res.headers['content-type']
 
-  let error;
-  if (statusCode !== 200) {
-    error = new Error('Request Failed.\n' +
-                      `Status Code: ${statusCode}`);
-  } else if (!/^application\/json/.test(contentType)) {
-    error = new Error('Invalid content-type.\n' +
-                      `Expected application/json but received ${contentType}`);
-  }
-  if (error) {
-    console.error(error.message);
-    // consume response data to free up memory
-    res.resume();
-    return;
-  }
+	  let error
+	  if (statusCode !== 200) {
+	    error = new Error('Request Failed.\n' +
+	        `Status Code: ${statusCode}`)
+	  } else if (!/^application\/json/.test(contentType)) {
+	    error = new Error('Invalid content-type.\n' +
+	        `Expected application/json but received ${contentType}`)
+	  }
+	  if (error) {
+	    console.error(error.message)
+	    // consume response data to free up memory
+	    res.resume()
+	    return;
+	  }
 
-  res.setEncoding('utf8');
-  let rawData = '';
-  res.on('data', (chunk) => { rawData += chunk; });
-  res.on('end', () => {
-    try {
-      const parsedData = JSON.parse(rawData);
-      console.log(parsedData);
-    } catch (e) {
-      console.error(e.message);
-    }
-  });
-}).on('error', (e) => {
-  console.error(`Got error: ${e.message}`);
-});
+	  res.setEncoding('utf8')
+	  let rawData = ''
+	  res.on('data', (chunk) => { rawData += chunk; })
+	  res.on('end', () => {
+	    try {
+	      const parsedData = JSON.parse(rawData)
+	      console.log(parsedData)
+	      const movieData = new Object()
+	      	movieData.title = parsedData.Title
+	      	movieData.genre = parsedData.Genre
+	      	movieData.actors = parsedData.Actors
+	      	movieData.ratings = parsedData.Ratings
+	      	movieData.year = parsedData.Year
+	      initialData.push(movieData)
+	    } catch (e) {
+	      console.error(e.message)
+	    }
+	  })
+	}).on('error', (e) => {
+	  console.error(`Got error: ${e.message}`)
+	})
+//}
 
 router.get('/', (req, res) => {
-	res.sendFile('views/index.html', {root:__dirname + '/../'})
+	console.log('****** initialData *******', initialData)
+	res.render('index', {data: initialData})
 })
 //get route -> index
 //router.get('/', (req,res) => {

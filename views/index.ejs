@@ -17,6 +17,11 @@
 	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 	  crossorigin="anonymous"> 
 	</script>
+	<script type="text/javascript">
+		tryme = (arg) => {
+			document.write(arg)
+		}
+	</script>
   
 </head>
 
@@ -24,6 +29,13 @@
 
 	<div id="app">
 		<h1> InMotion Code Challenge </h1>
+		<div id = 'myMovies'>
+			<script>
+				tryme('This is me')
+			</script>
+			<h2> Some Data </h2>
+			<p><%= data %></p>
+		</div>
 		<form action='' method='get'>
 			Title:
 			<input type='text' name='title'>
@@ -45,4 +57,5 @@
 	</div>
 
 </body>
+
 </html>
