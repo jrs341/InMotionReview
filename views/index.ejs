@@ -17,43 +17,30 @@
 	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 	  crossorigin="anonymous"> 
 	</script>
-	<script type="text/javascript">
-		tryme = (arg) => {
-			document.write(arg)
-		}
-	</script>
   
 </head>
 
 <body>
 
-	<div id="app">
-		<h1> InMotion Code Challenge </h1>
+	<div id = "app">
+		<h1> My Movies </h1>
 		<div id = 'myMovies'>
-			<script>
-				tryme('This is me')
-			</script>
-			<h2> Some Data </h2>
-			<p><%= data %></p>
+			<% data.map((movie, i) => { %>
+				<h3><%= movie.title %></h3>
+				<ul id = '<% movie.id %>'>
+					<li><%= movie.genre %></li>
+					<li><%= movie.year %></li>
+					<li><%= movie.actors %></li>
+					<li> Ratings
+						<ul> 
+						<% movie.ratings.map((rating, i) => { %>
+						<li><%= rating.Source %> : <%= rating.Value %></li>
+						<% }) %>
+						</ul>
+					</li>
+				</ul>
+			<% }) %>
 		</div>
-		<form action='' method='get'>
-			Title:
-			<input type='text' name='title'>
-			<br>
-			Genera:
-			<input type='text' name='genera'>
-			<br>
-			Year:
-			<input type='text' name='year'>
-			<br>
-			Rating:
-			<input type='text' name='year'>
-			<br>
-			Actors:
-			<input type='text' name='year'>
-			<br>
-			<input type='submit' value='Submit'>
-		<form>
 	</div>
 
 </body>
