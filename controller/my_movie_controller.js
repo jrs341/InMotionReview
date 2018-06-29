@@ -2,13 +2,53 @@ const express = require('express')
 const router = express.Router()
 const http = require('http')
 //const movies = require('../models/movies')
+const ids = [{title: 'Zoolander', id: 'tt0196229'},
+{title: 'Guardians of the Galaxy', id: 'tt3896198'},
+{title: 'Rambo', id: 'tt0462499'}]
 
-http.get('http://nodejs.org/dist/index.json', (res) => {
-  const { statusCode } = res
-  const contentType = res.headers['content-type']
-  console.log('****** res ******', res)
-  console.log('****** contentType ******', contentType)
-})
+sortByTitle = (a,b) => {
+	if (a.title < b.title)
+		return -1
+	if (a.title > b.title)
+		return 1
+	return 0
+}
+
+console.log(ids.sort(sortByTitle))
+
+http.get('http://www.omdbapi.com/?apikey=7b20f955&i=' + id, (res) => {
+  const { statusCode } = res;
+  const contentType = res.headers['content-type'];
+
+  let error;
+  if (statusCode !== 200) {
+    error = new Error('Request Failed.\n' +
+                      `Status Code: ${statusCode}`);
+  } else if (!/^application\/json/.test(contentType)) {
+    error = new Error('Invalid content-type.\n' +
+                      `Expected application/json but received ${contentType}`);
+  }
+  if (error) {
+    console.error(error.message);
+    // consume response data to free up memory
+    res.resume();
+    return;
+  }
+
+  res.setEncoding('utf8');
+  let rawData = '';
+  res.on('data', (chunk) => { rawData += chunk; });
+  res.on('end', () => {
+    try {
+      const parsedData = JSON.parse(rawData);
+      console.log(parsedData);
+    } catch (e) {
+      console.error(e.message);
+    }
+  });
+}).on('error', (e) => {
+  console.error(`Got error: ${e.message}`);
+});
 
 router.get('/', (req, res) => {
 	res.sendFile('views/index.html', {root:__dirname + '/../'})
