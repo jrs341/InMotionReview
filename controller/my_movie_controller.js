@@ -1,6 +1,14 @@
 const express = require('express')
 const router = express.Router()
+const http = require('http')
 //const movies = require('../models/movies')
+
+http.get('http://nodejs.org/dist/index.json', (res) => {
+  const { statusCode } = res
+  const contentType = res.headers['content-type']
+  console.log('****** res ******', res)
+  console.log('****** contentType ******', contentType)
+})
 
 router.get('/', (req, res) => {
 	res.sendFile('views/index.html', {root:__dirname + '/../'})
