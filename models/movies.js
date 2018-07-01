@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const MovieSchema = new Schema({
-	id:{
+	imdbId:{
 		type: String,
 		trim: true
 	},
@@ -11,10 +11,19 @@ const MovieSchema = new Schema({
 		type: String,
 		trim: true
 	},
-	myRating:{
+	genre:{
 		type: String,
 		trim: true
-	}
+	},
+	actors:{
+		type: String,
+		trim: true
+	},
+	year:{
+		type: String,
+		trim: true
+	},
+	ratings:[]
 })
 
 const Movies = mongoose.model('Movies', MovieSchema)
