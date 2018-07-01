@@ -1,8 +1,24 @@
 
-	renderMovies = (data) => {
-		console.log('***** movie data *****', data)
-		const movies = data.map((movie, i) => {
-			'<ul><li>movie.title</li></ul>'
+	renderMoviesUl = (data) => {
+		data.slice(0,3).map((movie, i) => {
+			console.log(i)
+			const node = document.createElement('UL')
+			node.setAttribute('class', movie.imdbId)
+			document.querySelector('div.movieList').appendChild(node)
+			renderMovieData(movie)
 		})
-		document.querySelector("#test").innerHTML = movies	
 	}
+
+	renderMovieData = (data) => {
+		console.log(data)
+		for(var key in data) {
+			console.log('li')
+			const li = document.createElement('LI')         
+			const textnode = document.createTextNode(data[key])
+			li.appendChild(textnode)
+			document.querySelector('ul.' + data.imdbId).appendChild(li)
+		}
+	}
+$(document).ready(() => {
+
+})
