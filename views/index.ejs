@@ -43,6 +43,10 @@
 <body>
 	<div id = 'app'>
 		<h1> My Movies </h1>
+		<form action="/search">
+      		<input type="text" placeholder="Search.." name="search">
+      		<button type="submit">Submit</button>
+    	</form>
 		<!-- <script>
 				var data = <%- JSON.stringify(data) %>
 				window.onload = () => { 
@@ -67,11 +71,9 @@
 			<% }) %>
 		</div> -->
 		<div class = 'movieList'>
-			<script>
-			window.onload = () => { 
+			<script> 
 				const data = <%- JSON.stringify(data) %>
 				renderMoviesUl(data)
-			}
 			</script>
 		</div>
 	</div>

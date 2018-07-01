@@ -1,6 +1,7 @@
 const axios = require('axios')
 const express = require('express')
 const router = express.Router()
+const Movies = require('../models/movies.js')
 
 sortByTitle = (a,b) => {
 	if (a.title > b.title)
@@ -13,6 +14,18 @@ sortByTitle = (a,b) => {
 router.get ('/', async (req, res) => {
 	const initialData = await axios.get ('https://api.mlab.com/api/1/databases/inmotion/collections/movies?apiKey=xBN2j2F0BU9C9AlgWOLzP0tLZKsATO1W')
 	res.render ('index', {data: initialData.data})
+})
+
+router.get('/search', async (req, res) => {
+	let data
+	data = await Movies.find({$text: { $search: req.query.search}}, (error, doc) => {
+		if(error) {
+			return error
+		} else {
+			return doc
+		}
+	})
+	res.render('index', {data: data})
 })
 
 module.exports = router
