@@ -17,8 +17,10 @@
 	  integrity='sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60='
 	  crossorigin='anonymous'> 
 	</script>
+
 	<script type='text/javascript' src='views/app.js'> 
 	</script>
+	
   	<script>
   		if (typeof(Storage) !== 'undefined') {
     		//let data = <%- JSON.stringify(data) %>
@@ -66,8 +68,10 @@
 		</div> -->
 		<div class = 'movieList'>
 			<script>
-			const data = <%- JSON.stringify(data) %>
-			renderMoviesUl(data)
+			window.onload = () => { 
+				const data = <%- JSON.stringify(data) %>
+				renderMoviesUl(data)
+			}
 			</script>
 		</div>
 	</div>
