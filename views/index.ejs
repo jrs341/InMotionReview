@@ -12,11 +12,11 @@
 
   	<title>InMotion Code Challenge</title>
 
-  	<script
+  	<!--<script
 	  src='https://code.jquery.com/jquery-3.3.1.js'
 	  integrity='sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60='
 	  crossorigin='anonymous'> 
-	</script>
+	</script>-->
 
 	<script type='text/javascript' src='views/app.js'> 
 	</script>
@@ -41,40 +41,41 @@
 </head>
 
 <body>
+	
 	<div id = 'app'>
 		<h1> My Movies </h1>
-		<form action="/search">
-      		<input type="text" placeholder="Search.." name="search">
-      		<button type="submit">Submit</button>
+		<form action='/search'
+			id = 'searchForm'>
+      		<input type='text' placeholder='Search..' name='search'>
+      		<button type='submit'>Submit</button>
+      		<button type = 'button'
+      			id = 'cancelButton'
+      			onClick = 'cancel()'
+      			>Cancel 
+      		</button>
     	</form>
-		<!-- <script>
-				var data = <%- JSON.stringify(data) %>
-				window.onload = () => { 
-					renderMovies(data)
-				}
-		</script>
-		<div id = 'myMovies'>
-			<% data.slice(0,1).map((movie, i) => { %>
-				<h3><%= movie.title %></h3>
-				<ul id = '<% movie.id %>'>
-					<li><%= movie.genre %></li>
-					<li><%= movie.year %></li>
-					<li><%= movie.actors %></li>
-					<li> Ratings
-						<ul> 
-						<% movie.ratings.map((rating, i) => { %>
-						<li><%= rating.Source %> : <%= rating.Value %></li>
-						<% }) %>
-						</ul>
-					</li>
-				</ul>
-			<% }) %>
-		</div> -->
-		<div class = 'movieList'>
-			<script> 
+		<div id = 'movieList'>
+			<!--<script> 
 				const data = <%- JSON.stringify(data) %>
 				renderMoviesUl(data)
-			</script>
+			</script>-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+		<script type="text/babel">
+		class Greeting extends React.Component {
+		    render() {
+		    const data = <%- JSON.stringify(data) %>
+		    	console.log('data', data)
+		    	renderMoviesUl(data)
+		        //return (<p>Hello world</p>)
+		    }
+		}
+		ReactDOM.render(
+		    <Greeting />,
+		    document.getElementById('movieList')
+		)
+		</script>
 		</div>
 	</div>
 

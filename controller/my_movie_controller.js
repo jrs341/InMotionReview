@@ -25,7 +25,7 @@ router.get('/search', async (req, res) => {
 			return doc
 		}
 	})
-	res.render('index', {data: data})
+	res.render('', {data: data})
 })
 
 module.exports = router

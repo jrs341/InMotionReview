@@ -1,10 +1,14 @@
 
 	renderMoviesUl = (data) => {
-		data.slice(0,100).map((movie, i) => {
+		data.slice(0,2).map((movie, i) => {
 			const node = document.createElement('UL')
+			//const node = $('<ul>', {
+				//text: movie.title,
+				//class: movie.imdbId
+			//}).append('.movieList')
 			node.setAttribute('class', movie.imdbId)
 			node.innerHTML = movie.title
-			document.querySelector('div.movieList').appendChild(node)
+			document.querySelector('div#movieList').appendChild(node)
 			renderMovieData(movie)
 		})
 	}
@@ -52,6 +56,11 @@
 		})
 	}
 
-$(document).ready(() => {
-	renderMoviesUl()
-})
+	cancel = () => {
+		//$('#searchForm')[0].reset()
+	}
+
+//$(document).ready(() => {
+	//renderMoviesUl()
+	//cancel()
+//})
