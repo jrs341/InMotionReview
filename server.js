@@ -3,6 +3,9 @@ const app = express()
 const mongoose = require('mongoose')
 const routes = require('./controller/my_movie_controller.js')
 
+
+app.use(express.static(__dirname))
+
 app.set('view engine', 'ejs')
 
 // Database configuration for mongoose

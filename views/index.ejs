@@ -17,15 +17,37 @@
 	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 	  crossorigin="anonymous"> 
 	</script>
-  
+	<script type="text/javascript" src="views/app.js"> 
+	</script>
+  	<script>
+  		if (typeof(Storage) !== "undefined") {
+    		let data = <%- JSON.stringify(data) %>
+    		localStorage.setItem('movies',
+    			JSON.stringify({'data': data}))
+    		const storage = true
+    		movies = JSON.parse(localStorage.movies).data
+    		//const pages = Array.apply(null,
+    			//{length: movies.length/5}).map((value, index)=> {
+  				//return index + 1})
+    		console.log(JSON.parse(localStorage.movies).data)
+		} else {
+			data = <%- JSON.stringify(data) %>
+		}
+  	</script>
+
 </head>
 
 <body>
-
 	<div id = "app">
 		<h1> My Movies </h1>
 		<div id = 'myMovies'>
-			<% data.map((movie, i) => { %>
+			<script>
+				var data = <%- JSON.stringify(data) %>
+				window.onload = () => { 
+					renderMovies(data)
+				}
+			</script>
+			<% data.slice(0,1).map((movie, i) => { %>
 				<h3><%= movie.title %></h3>
 				<ul id = '<% movie.id %>'>
 					<li><%= movie.genre %></li>
@@ -40,6 +62,10 @@
 					</li>
 				</ul>
 			<% }) %>
+		</div>
+		<div id = 'test'>
+			<ul class = 'mylist'>
+			</ul>
 		</div>
 	</div>
 

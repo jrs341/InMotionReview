@@ -1,3 +1,4 @@
+const axios = require('axios')
 const express = require('express')
 const router = express.Router()
 
@@ -9,10 +10,9 @@ sortByTitle = (a,b) => {
 	return 0
 }
 
-router.get('/', (req, res) => {
-	let initialData = []
-	//console.log('****** initialData *******', initialData[1].ratings)
-	res.render('index', {data: initialData})
+router.get ('/', async (req, res) => {
+	const initialData = await axios.get ('https://api.mlab.com/api/1/databases/inmotion/collections/movies?apiKey=xBN2j2F0BU9C9AlgWOLzP0tLZKsATO1W')
+	res.render ('index', {data: initialData.data})
 })
 
 module.exports = router
