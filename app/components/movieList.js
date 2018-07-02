@@ -9,13 +9,13 @@ export default class MovieList extends Component {
 			data: []
 		}
 	}
+
 	componentDidMount () {
-    		axios.get ('https://api.mlab.com/api/1/databases/inmotion/collections/movies?apiKey=xBN2j2F0BU9C9AlgWOLzP0tLZKsATO1W')
-    			.then(res => {
-    				//console.log(res.data)
-    				this.setState({data: res.data})
-    			})
-      	}
+		axios.get ('https://api.mlab.com/api/1/databases/inmotion/collections/movies?apiKey=xBN2j2F0BU9C9AlgWOLzP0tLZKsATO1W')
+			.then(res => {
+				this.setState({data: res.data})
+		})
+    }
 
 	render () {
 		return (
@@ -27,17 +27,15 @@ export default class MovieList extends Component {
 	}
 
 	renderMoviesUl () {
-		const movieList = this.state.data.slice(0,2).map(movie => {
+		const movieList = this.state.data.slice(0,10).map(movie => {
 			return <ul key = {movie._id}> {movie.title} 
 			 	{ this.renderMovieData(movie) }
 			</ul>
 		})
-		console.log(movieList)
 		return movieList
 	}
 
 	renderMovieData (data) {
-		console.log('data1', data)
 		const id = data.imdbId
 		data = {
 			genre: data.genre,
@@ -47,14 +45,27 @@ export default class MovieList extends Component {
 		}
 		let movieData = []
 		Object.keys(data).forEach((key) => {
-			console.log('data key', data[key])
 			if (key == 'ratings') {
-
+				movieData.push(this.renderRatingsUl(data[key]))
 			} else {
 				movieData.push(<li> { data[key] } </li>)
 			}
 		})
-	console.log(movieData)
 	return movieData
+	}
+
+	renderRatingsUl (data) {
+		const ratingsUl = <ul> Ratings 
+			{ this.renderRatingsData(data) }
+		</ul>
+		return ratingsUl
+	}
+
+	renderRatingsData (data) {
+		let movieRatings = []
+		data.map((ratings, i) => {
+			movieRatings.push(<li> { ratings.Source } ': ' { ratings.Value } </li> )
+		})
+	return movieRatings
 	}
 }
