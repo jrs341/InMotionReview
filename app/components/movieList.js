@@ -1,33 +1,15 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 
 export default class MovieList extends Component {
-	constructor() {
-		super()
-
-		this.state ={
-			data: []
-		}
-	}
-
-	componentDidMount () {
-		axios.get ('https://api.mlab.com/api/1/databases/inmotion/collections/movies?apiKey=xBN2j2F0BU9C9AlgWOLzP0tLZKsATO1W')
-			.then(res => {
-				this.setState({data: res.data})
-		})
-    }
 
 	render () {
 		return (
-			<div>
-			<h1> movie list </h1>
 			<div> { this.renderMoviesUl() } </div>
-			</div>
 		)
 	}
 
 	renderMoviesUl () {
-		const movieList = this.state.data.slice(0,10).map(movie => {
+		const movieList = this.props.data.slice(0,10).map(movie => {
 			return <ul key = {movie._id}> {movie.title} 
 			 	{ this.renderMovieData(movie) }
 			</ul>
@@ -44,18 +26,18 @@ export default class MovieList extends Component {
 			ratings: data.ratings
 		}
 		let movieData = []
-		Object.keys(data).forEach((key) => {
+		Object.keys(data).forEach((key, i) => {
 			if (key == 'ratings') {
-				movieData.push(this.renderRatingsUl(data[key]))
+				movieData.push(this.renderRatingsUl(data[key], id))
 			} else {
-				movieData.push(<li> { data[key] } </li>)
+				movieData.push(<li key = { i }> { data[key] } </li>)
 			}
 		})
 	return movieData
 	}
 
-	renderRatingsUl (data) {
-		const ratingsUl = <ul> Ratings 
+	renderRatingsUl (data, id) {
+		const ratingsUl = <ul key = {'rating' + id}> Ratings 
 			{ this.renderRatingsData(data) }
 		</ul>
 		return ratingsUl
@@ -64,7 +46,7 @@ export default class MovieList extends Component {
 	renderRatingsData (data) {
 		let movieRatings = []
 		data.map((ratings, i) => {
-			movieRatings.push(<li> { ratings.Source } ': ' { ratings.Value } </li> )
+			movieRatings.push(<li key = {'rating' + i}> { ratings.Source }: { ratings.Value } </li> )
 		})
 	return movieRatings
 	}
