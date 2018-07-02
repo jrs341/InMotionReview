@@ -22,7 +22,6 @@ db.once("open", () => {
 
 
 app.get('/', (req, res) => {
-	console.log('****** dir *****',__dirname)
   res.sendFile('dist/public/index.html', { root: __dirname })
 })
 

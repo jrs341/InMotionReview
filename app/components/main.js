@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import SearchForm from './searchForm'
+import MovieList from './movieList'
 
-class Main extends Component {
+export default class Main extends Component {
 
   render () {
     return (
-        <h1> it's hte main comp </h1>
+    	<div>
+	        <h1> My Movies </h1>
+			<SearchForm />
+			<MovieList />
+    	</div>
     )
   }
 }
-
-export { Main }
-export default Main
