@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import SearchForm from './searchForm'
+import AddMovieForm from './addMovieForm'
 import MovieList from './movieList'
 
 export default class Main extends Component {
@@ -66,6 +66,7 @@ export default class Main extends Component {
 	      			value = 'Cancel'>
 	      			Cancel
 	      		</button>
+	      	<AddMovieForm />
 			<MovieList data = { this.state.data }/>
     	</div>
     )
