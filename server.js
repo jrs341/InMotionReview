@@ -43,23 +43,42 @@ app.post('/newMovie', (req, res) => {
   var newMovie = new Movies(req.body)
   newMovie.save((error, doc) => {
     if (error) {
-      console.log('**** error ***', error)
       res.send(error)
     } else {
-      console.log('***** doc *****', doc)
+      res.send(doc)
+    }
+  })
+})
+
+app.post('/editMovie', (req, res) => {
+  const newBody = {}
+  Object.keys(req.body).forEach(key => {
+      if (key == 'ratings') {
+        // newBody.ratings = { $push: { ratings: { Source: 'myRating', Value: req.body[key] } } }
+        newBody.ratings = []
+      } else {
+        if (key = 'id') {
+
+        } else {
+          newBody[key] = req.body[key]
+        }
+      }
+    })
+
+  Movies.update({_id: req.body.id}, { $set: newBody }, (error, doc) => {
+    if (error) {
+      res.send(error)
+    } else {
       res.send(doc)
     }
   })
 })
 
 app.post('/deleteMovie', (req, res) => {
-  console.log('***** req body ****', req.body)
   Movies.remove({_id: req.body.id}, (error, doc) => {
     if (error) {
-      console.log('**** error ***', error)
       res.send(error)
     } else {
-      console.log('***** doc *****', doc)
       res.send(doc)
     }
   })

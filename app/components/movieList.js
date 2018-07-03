@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import Input from './input'
-
 export default class MovieList extends Component {
 	constructor() {
 		super()
@@ -10,13 +8,12 @@ export default class MovieList extends Component {
 		this.state = {
 			editMovie: {
 				id: '',
+				imdbId: '',
 				title: '',
 				genre: '',
 				actors: '',
-				ratings: {
-					Source: 'myRating',
-					Value: ''
-				}
+				year: '',
+				ratings: ''
 			}
 		}
 
@@ -26,17 +23,17 @@ export default class MovieList extends Component {
 	}
 
 	onChange (event) {
-		console.log(event.target.value)
 		const id = event.target.id
-		console.log(this.state.editMovie)
+		const movieId = id.substring(id.indexOf('/') + 1)
 		const editMovie = this.state.editMovie
-		console.log('** event id **', id)
 		const key = id.substr(0, id.indexOf('/'))
-		console.log('** key **', key)
-		console.log(id.substr(1, id.indexOf('/')))
-		editMovie[key] = event.target.value
+		if ( key == 'myRating') {
+			editMovie.ratings = event.target.value
+		} else {
+			editMovie[key] = event.target.value
+		}
+		editMovie.id = movieId
 		this.setState({editMovie: editMovie })
-		console.log(this.state.editMovie)
 	}
 
 	deleteMovie (event) {
@@ -51,19 +48,19 @@ export default class MovieList extends Component {
 			})
 	}
 
-	// getMovieId (event) {
-	// 	const id = event.target.id
-	// 	const updateMovie = this.state.updateMovie
-	// 	console.log('** event id **', id)
-	// 	const key = id.substr(0, id.indexOf('/'))
-	// 	console.log('** key **', key)
-	// 	updateMovie[key] = event.target.value
-	// 	this.setState({updateMovie: updateMovie })
-	//}
-
-	updateMovie (event) {
-		const id = event.target.id
-		console.log('** update id **', id)
+	updateMovie () {
+		const params = new URLSearchParams()
+		const movie = this.state.editMovie
+		Object.keys(movie).forEach(key =>{
+			params.append(key, movie[key])
+		})
+		axios.post('/editMovie', params)
+			.then((res) => {
+				console.log('axios res', res)
+			})
+			.catch((err) =>{
+				console.log('axios error', err)
+			})
 	}
 
 	render () {
@@ -158,7 +155,7 @@ export default class MovieList extends Component {
 			movieRatings.unshift(<li key = {'myRating'}>
 				My Rating: 
 				<input type = 'text' 
-					id = { 'myRating' + id }
+					id = { 'myRating/' + id }
 					placeholder = ' Not yet rated'
 					onChange = { this.onChange }
 					style = {{border: 'none'}} />
