@@ -29,10 +29,14 @@ export default class addMovieForm extends Component {
 		Object.keys(newMovie).forEach(key => {
 			if (key == 'myRating') {
 			newMovie[key].Value = ''
+			document.querySelector('#' + key).value = ''
 			}
 			newMovie[key] = ''
+			document.querySelector('#' + key).value = ''
 		})
+		console.log(newMovie)
 		this.setState({newMovie: newMovie, disabled: true})
+
 	}
 
 	handleChange (key, event) {
@@ -54,7 +58,7 @@ export default class addMovieForm extends Component {
 				{key.charAt(0).toUpperCase() + key.slice(1)}
 				</label>
 				<input 
-					key = { key }
+					id = { key }
 					type = 'text'
 					onChange = {this.handleChange.bind(this, key)} 
 				/>
@@ -73,6 +77,7 @@ export default class addMovieForm extends Component {
 		axios.post('/newMovie', params)
 			.then((res) => {
 				this.props.updateParent(res.data)
+				this.reset
 			})
 			.catch((err) =>{
 				console.log('axios error', err)
@@ -86,7 +91,7 @@ export default class addMovieForm extends Component {
 				<button type = 'button'
 					name = 'submitNewMove'
 					style = {{display: this.props.display}}
-					disabled = { this.props.disabled}
+					disabled = { this.props.disabled }
 					onClick = { this.submitNewMovie }>
 					Submit Movie
 				</button>
