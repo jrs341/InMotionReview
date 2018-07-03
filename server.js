@@ -41,8 +41,20 @@ app.get('/search/:text', (req, res) => {
 
 app.post('/newMovie', (req, res) => {
   var newMovie = new Movies(req.body)
-  console.log('**** body *****', req.body)
   newMovie.save((error, doc) => {
+    if (error) {
+      console.log('**** error ***', error)
+      res.send(error)
+    } else {
+      console.log('***** doc *****', doc)
+      res.send(doc)
+    }
+  })
+})
+
+app.post('/deleteMovie', (req, res) => {
+  console.log('***** req body ****', req.body)
+  Movies.remove({_id: req.body.id}, (error, doc) => {
     if (error) {
       console.log('**** error ***', error)
       res.send(error)
