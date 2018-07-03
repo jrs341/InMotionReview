@@ -70,7 +70,7 @@ export default class MovieList extends Component {
 	}
 
 	renderMoviesUl () {
-		const movieList = this.props.data.slice(0,5).map(movie => {
+		const movieList = this.props.data.map(movie => {
 			return <ul key = { movie._id }>
 				<button
 					id = { movie._id }
