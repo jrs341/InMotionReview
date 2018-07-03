@@ -10,7 +10,16 @@ export default class MovieList extends Component {
 
 	renderMoviesUl () {
 		const movieList = this.props.data.slice(0,10).map(movie => {
-			return <ul key = {movie._id}> {movie.title} 
+			return <ul key = {movie._id}>
+			<label> Title:  </label>
+			<input type = 'text'
+				value = { movie.title }
+				disabled = 'true'
+				style = {{border: 'none'}} />
+				<button>
+				</button>
+				<button>
+				</button>
 			 	{ this.renderMovieData(movie) }
 			</ul>
 		})
@@ -30,7 +39,13 @@ export default class MovieList extends Component {
 			if (key == 'ratings') {
 				movieData.push(this.renderRatingsUl(data[key], id))
 			} else {
-				movieData.push(<li key = { i }> { data[key] } </li>)
+				movieData.push(<li key = { i }>
+					<label>{key.charAt(0).toUpperCase() + key.slice(1)}: </label>
+					<input type = 'text'
+						value = { data[key] } 
+						disabled = 'true'
+						style = {{ border: 'none' }} />
+					</li>)
 			}
 		})
 	return movieData
@@ -45,9 +60,33 @@ export default class MovieList extends Component {
 
 	renderRatingsData (data) {
 		let movieRatings = []
+		let myRating = true
+		data.map(obj => {
+			if (!Object.hasOwnProperty('myRating')) {
+				myRating = false
+			}
+		})
 		data.map((ratings, i) => {
+			if (ratings.myRating){
+				movieRatings.push(<li key = {'rating' + i}>
+					My Rating
+					<input type = 'text' 
+						value = { ratings.Value }
+						disabled = 'true'
+						style = {{border: 'none'}} />
+					</li> )
+			} 
 			movieRatings.push(<li key = {'rating' + i}> { ratings.Source }: { ratings.Value } </li> )
 		})
+		if (!myRating){
+			movieRatings.unshift(<li key = {'myRating'}>
+				My Rating: 
+				<input type = 'text' 
+					value = ' Not yet rated'
+					disabled = 'true'
+					style = {{border: 'none'}} />
+				</li> )
+		}
 	return movieRatings
 	}
 }

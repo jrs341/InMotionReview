@@ -10,9 +10,12 @@ export default class Main extends Component {
 
 		this.state ={
 			data: [],
+			display: 'none',
+			label: 'Add Movie',
 			searchText: ''
 		}
 
+		this.addMovie = this.addMovie.bind(this)
 		this.handleChange = this.handleChange.bind(this)
 		this.searchMovies = this.searchMovies.bind(this)
 	}
@@ -28,6 +31,16 @@ export default class Main extends Component {
 				this.setState({data: res.data})
 			}	
 		})
+    }
+
+    addMovie () {
+    	this.setState({display: this.state.display == 'none'
+    		? ''
+    		: 'none',
+    		label: this.state.label == 'Cancel'
+    		? 'Cancel'
+    		: 'Add Movie'
+    	})
     }
 
     handleChange (event) {
@@ -66,7 +79,12 @@ export default class Main extends Component {
 	      			value = 'Cancel'>
 	      			Cancel
 	      		</button>
-	      	<AddMovieForm />
+	      		<button type = 'button'
+	      			id = 'addMovie'
+	      			onClick = { this.addMovie }>
+	      			{ this.state.label }
+	      		</button>
+	      	<AddMovieForm display = { this.state.display }/>
 			<MovieList data = { this.state.data }/>
     	</div>
     )
