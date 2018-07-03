@@ -10,6 +10,7 @@ export default class Main extends Component {
 
 		this.state ={
 			data: [],
+			newdata: [],
 			display: 'none',
 			label: 'Add Movie',
 			searchText: ''
@@ -25,7 +26,7 @@ export default class Main extends Component {
 		axios.get ('https://api.mlab.com/api/1/databases/inmotion/collections/movies?apiKey=xBN2j2F0BU9C9AlgWOLzP0tLZKsATO1W')
 			.then(res => {
 				if (typeof(Storage) !== 'undefined') {
-    			localStorage.setItem('movies', JSON.stringify({'data': res.data}))
+    			localStorage.setItem('movies', JSON.stringify(res.data))
     			localStorage.setItem('storage', true)
   				this.setState({data: res.data})
 			} else {
@@ -42,6 +43,19 @@ export default class Main extends Component {
     		? 'Cancel'
     		: 'Add Movie'
     	})
+    }
+    //TODO fix this
+    cancelSearch () {
+    	// const allMovies = JSON.parse(localStorage.getItem('movies'))
+    	// console.log('allMovies', allMovies)
+    	document.querySelector('#searchBox').value = ''
+    	// console.log(JSON.parse(localStorage.getItem('movies')))
+    	// const refreshMovies = []
+    	// allMovies.slice(0,5).map(obj => {
+    	// 	console.log(obj)
+    	// 	refreshMovies.push(obj)
+    	// })
+    	// this.setState({newdata: refreshMovies})
     }
 
     handleChange (event) {
@@ -72,21 +86,18 @@ export default class Main extends Component {
     	<div>
     		<h1> My Movies </h1>
 	      		<input type = 'text'
+	      			id = 'searchBox'
 	      			placeholder = 'Search..' 
-	      			name = 'search'
 	      			onChange = { this.handleChange }/>
 	      		<button type = 'submit'
-	      			value = 'Submit'
 	      			onClick = { this.searchMovies }>
 	      			Submit
 	      		</button>
 	      		<button type = 'button'
-	      			id = 'cancelButton'
-	      			value = 'Cancel'>
+	      			onClick = { this.cancelSearch }>
 	      			Cancel
 	      		</button>
 	      		<button type = 'button'
-	      			id = 'addMovie'
 	      			onClick = { this.addMovie }>
 	      			{ this.state.label }
 	      		</button>

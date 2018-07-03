@@ -34,7 +34,6 @@ export default class addMovieForm extends Component {
 			newMovie[key] = ''
 			document.querySelector('#' + key).value = ''
 		})
-		console.log(newMovie)
 		this.setState({newMovie: newMovie, disabled: true})
 
 	}

@@ -61,6 +61,9 @@ export default class MovieList extends Component {
 	renderRatingsData (data) {
 		let movieRatings = []
 		let myRating = true
+		if (data.length === 0) {
+			myRating = false
+		}
 		data.map(obj => {
 			if (!Object.hasOwnProperty('myRating')) {
 				myRating = false
@@ -78,6 +81,7 @@ export default class MovieList extends Component {
 			} 
 			movieRatings.push(<li key = {'rating' + i}> { ratings.Source }: { ratings.Value } </li> )
 		})
+		console.log('** !myRating **', !myRating)
 		if (!myRating){
 			movieRatings.unshift(<li key = {'myRating'}>
 				My Rating: 
