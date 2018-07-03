@@ -18,6 +18,7 @@ export default class Main extends Component {
 		this.addMovie = this.addMovie.bind(this)
 		this.handleChange = this.handleChange.bind(this)
 		this.searchMovies = this.searchMovies.bind(this)
+		this.updateState = this.updateState.bind(this)
 	}
 
 	componentDidMount () {
@@ -53,12 +54,17 @@ export default class Main extends Component {
 	    	url: '/search/' + this.state.searchText
 	    }).then((res) => {
 	      if (res.data == '') {
-	      
+	      // TODO fix this
 	      } else {
 	        this.setState({data: res.data})
 	      }
 	    })
-	    event.preventDefault()
+  	}
+
+  	updateState (newData) {
+  		const data = this.state.data
+  		data.unshift(newData)
+    	this.setState({data: data})
   	}
 
   render () {
@@ -84,7 +90,8 @@ export default class Main extends Component {
 	      			onClick = { this.addMovie }>
 	      			{ this.state.label }
 	      		</button>
-	      	<AddMovieForm display = { this.state.display }/>
+	      	<AddMovieForm display = { this.state.display }
+	      		updateParent = {this.updateState}/>
 			<MovieList data = { this.state.data }/>
     	</div>
     )

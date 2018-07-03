@@ -1,8 +1,13 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const Movies = require('./models/movies')
 app.use(express.static(__dirname))
+
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 
 // Database configuration for mongoose
 // db: inmotion
@@ -29,6 +34,20 @@ app.get('/search/:text', (req, res) => {
     if (error) {
       res.send(error)
     } else {
+      res.send(doc)
+    }
+  })
+})
+
+app.post('/newMovie', (req, res) => {
+  var newMovie = new Movies(req.body)
+  console.log('**** body *****', req.body)
+  newMovie.save((error, doc) => {
+    if (error) {
+      console.log('**** error ***', error)
+      res.send(error)
+    } else {
+      console.log('***** doc *****', doc)
       res.send(doc)
     }
   })

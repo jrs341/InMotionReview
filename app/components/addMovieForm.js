@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 export default class addMovieForm extends Component {
 	constructor(props){
@@ -8,7 +9,7 @@ export default class addMovieForm extends Component {
 			disabled: true,
 			newMovie: {
 				title: '',
-				genera: '',
+				genre: '',
 				actors: '',
 				year: '',
 				ratings: {
@@ -42,7 +43,6 @@ export default class addMovieForm extends Component {
 		}
 		newMovie[key] = event.target.value
 		this.setState({newMovie: newMovie})
-		console.log('movie state', this.state.newMovie)
 	}
 
 	renderMovieForm () {
@@ -64,7 +64,19 @@ export default class addMovieForm extends Component {
 	}
 
 	submitNewMovie () {
-		console.log(this.state.newMovie)
+		const movie = this.state.newMovie
+		//*** found this solution here https://github.com/axios/axios#using-applicationx-www-form-urlencoded-format
+		const params = new URLSearchParams()
+		Object.keys(movie).forEach(key =>{
+			params.append(key, movie[key])
+		})
+		axios.post('/newMovie', params)
+			.then((res) => {
+				this.props.updateParent(res.data)
+			})
+			.catch((err) =>{
+				console.log('axios error', err)
+			})
 	}
 
 	render() {
